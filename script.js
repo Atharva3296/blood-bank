@@ -17,6 +17,11 @@ function switchPage(pageName) {
     }
   })
 
+  if (pageName === "manage-requests") {
+    displayAllRequests()
+    updatePendingRequestsCount()
+  }
+
   window.scrollTo(0, 0)
 }
 
@@ -126,6 +131,8 @@ if (bloodRequestForm) {
 
     bloodRequestForm.reset()
 
+    updatePendingRequestsCount()
+
     setTimeout(() => {
       switchPage("dashboard")
     }, 2000)
@@ -152,6 +159,111 @@ function saveRequestToLocalStorage(requestData) {
   requestData.status = "Pending"
   requests.push(requestData)
   localStorage.setItem("bloodBankRequests", JSON.stringify(requests))
+}
+
+function displayAllRequests() {
+  const requests = JSON.parse(localStorage.getItem("bloodBankRequests")) || []
+  const requestsList = document.getElementById("requests-list")
+
+  if (!requestsList) return
+
+  if (requests.length === 0) {
+    requestsList.innerHTML = '<p class="empty-message">No blood requests yet</p>'
+    return
+  }
+
+  requestsList.innerHTML = ""
+
+  requests.forEach((request) => {
+    const requestCard = document.createElement("div")
+    requestCard.className = "request-card"
+    requestCard.innerHTML = `
+      <div class="request-header">
+        <div class="request-info">
+          <h4 class="request-hospital">${request.hospitalName}</h4>
+          <p class="request-id">Request ID: ${request.requestId}</p>
+        </div>
+        <span class="request-status status-${request.status.toLowerCase()}">${request.status}</span>
+      </div>
+      <div class="request-details">
+        <div class="detail-row">
+          <span class="detail-label">Contact Person:</span>
+          <span class="detail-value">${request.contactPerson}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Phone:</span>
+          <span class="detail-value">${request.phone}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Email:</span>
+          <span class="detail-value">${request.email}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Blood Type:</span>
+          <span class="detail-value blood-type-highlight">${request.bloodType}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Units Required:</span>
+          <span class="detail-value">${request.units}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Required Date:</span>
+          <span class="detail-value">${request.requiredDate}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Urgency:</span>
+          <span class="detail-value urgency-${request.urgency.toLowerCase()}">${request.urgency}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Reason:</span>
+          <span class="detail-value">${request.reason}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Request Date:</span>
+          <span class="detail-value">${new Date(request.requestDate).toLocaleString()}</span>
+        </div>
+      </div>
+      <div class="request-actions">
+        <button class="approve-button" onclick="updateRequestStatus('${request.requestId}', 'Approved')">Approve</button>
+        <button class="reject-button" onclick="updateRequestStatus('${request.requestId}', 'Rejected')">Reject</button>
+        <button class="delete-button" onclick="deleteRequest('${request.requestId}')">Delete</button>
+      </div>
+    `
+    requestsList.appendChild(requestCard)
+  })
+}
+
+function updateRequestStatus(requestId, newStatus) {
+  const requests = JSON.parse(localStorage.getItem("bloodBankRequests")) || []
+  const requestIndex = requests.findIndex((req) => req.requestId === requestId)
+
+  if (requestIndex !== -1) {
+    requests[requestIndex].status = newStatus
+    localStorage.setItem("bloodBankRequests", JSON.stringify(requests))
+    displayAllRequests()
+    updatePendingRequestsCount()
+    showNotification(`Request ${newStatus.toLowerCase()} successfully!`, "success")
+  }
+}
+
+function deleteRequest(requestId) {
+  if (confirm("Are you sure you want to delete this request?")) {
+    let requests = JSON.parse(localStorage.getItem("bloodBankRequests")) || []
+    requests = requests.filter((req) => req.requestId !== requestId)
+    localStorage.setItem("bloodBankRequests", JSON.stringify(requests))
+    displayAllRequests()
+    updatePendingRequestsCount()
+    showNotification("Request deleted successfully!", "success")
+  }
+}
+
+function updatePendingRequestsCount() {
+  const requests = JSON.parse(localStorage.getItem("bloodBankRequests")) || []
+  const pendingCount = requests.filter((req) => req.status === "Pending").length
+  const countElement = document.getElementById("pending-requests-count")
+  if (countElement) {
+    countElement.textContent = pendingCount
+  }
 }
 
 function addActivityToRecent(activityType, description) {
@@ -271,5 +383,6 @@ if (logoutButton) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  updatePendingRequestsCount()
   switchPage("dashboard")
 })
