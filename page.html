@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Blood Bank System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <span class="logo-icon">🩸</span>
+                <h1 class="site-title">Blood Bank System</h1>
+            </div>
+            <nav class="main-navigation">
+                <button class="nav-button active" data-page="dashboard">Dashboard</button>
+                <button class="nav-button" data-page="inventory">Inventory</button>
+                <button class="nav-button" data-page="donor">Donor Registration</button>
+                <button class="nav-button" data-page="request">Blood Request</button>
+                <button class="nav-button" data-page="search">Search Blood</button>
+            </nav>
+            <div class="user-section">
+                <span class="user-name">Admin User</span>
+                <button class="logout-button">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section id="dashboard-page" class="page-section active">
+            <div class="page-header">
+                <h2 class="page-title">Dashboard</h2>
+                <p class="page-subtitle">Welcome to Blood Bank Management System</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blood-type-o">O+</div>
+                    <div class="stat-content">
+                        <p class="stat-label">O+ Blood</p>
+                        <p class="stat-value">45 Units</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon blood-type-a">A+</div>
+                    <div class="stat-content">
+                        <p class="stat-label">A+ Blood</p>
+                        <p class="stat-value">32 Units</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon blood-type-b">B+</div>
+                    <div class="stat-content">
+                        <p class="stat-label">B+ Blood</p>
+                        <p class="stat-value">28 Units</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon blood-type-ab">AB+</div>
+                    <div class="stat-content">
+                        <p class="stat-label">AB+ Blood</p>
+                        <p class="stat-value">15 Units</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions-section">
+                <h3 class="section-title">Quick Actions</h3>
+                <div class="actions-grid">
+                    <button class="action-button" onclick="switchPage('donor')">
+                        <span class="action-icon">👤</span>
+                        <span class="action-text">Register Donor</span>
+                    </button>
+                    <button class="action-button" onclick="switchPage('request')">
+                        <span class="action-icon">🩹</span>
+                        <span class="action-text">Request Blood</span>
+                    </button>
+                    <button class="action-button" onclick="switchPage('inventory')">
+                        <span class="action-icon">📦</span>
+                        <span class="action-text">View Inventory</span>
+                    </button>
+                    <button class="action-button" onclick="switchPage('search')">
+                        <span class="action-icon">🔍</span>
+                        <span class="action-text">Search Blood</span>
+                    </button>
+                </div>
+            </div>
+
+           <div class="recent-activity-section">
+                <h3 class="section-title">Recent Activity</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="activity-type">Donation</span>
+                        <span class="activity-description">Atharva Shedge donated O+ blood</span>
+                        <span class="activity-time">2 hours ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-type">Request</span>
+                        <span class="activity-description">Sarthak Wakhare requested 5 units of A+ blood</span>
+                        <span class="activity-time">4 hours ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-type">Donation</span>
+                        <span class="activity-description">Ganesh Sagar donated B+ blood</span>
+                        <span class="activity-time">6 hours ago</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="inventory-page" class="page-section">
+            <div class="page-header">
+                <h2 class="page-title">Blood Inventory</h2>
+                <p class="page-subtitle">Current blood stock levels</p>
+            </div>
+
+            <div class="inventory-container">
+                <table class="inventory-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th class="table-cell">Blood Type</th>
+                            <th class="table-cell">Units Available</th>
+                            <th class="table-cell">Expiry Date</th>
+                            <th class="table-cell">Status</th>
+                            <th class="table-cell">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <tr class="table-row">
+                            <td class="table-cell">O+</td>
+                            <td class="table-cell">45</td>
+                            <td class="table-cell">2025-12-15</td>
+                            <td class="table-cell"><span class="status-badge status-available">Available</span></td>
+                            <td class="table-cell">
+                                <button class="action-link">Edit</button>
+                                <button class="action-link">Delete</button>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="table-cell">A+</td>
+                            <td class="table-cell">32</td>
+                            <td class="table-cell">2025-11-20</td>
+                            <td class="table-cell"><span class="status-badge status-available">Available</span></td>
+                            <td class="table-cell">
+                                <button class="action-link">Edit</button>
+                                <button class="action-link">Delete</button>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="table-cell">B+</td>
+                            <td class="table-cell">28</td>
+                            <td class="table-cell">2025-10-30</td>
+                            <td class="table-cell"><span class="status-badge status-warning">Low Stock</span></td>
+                            <td class="table-cell">
+                                <button class="action-link">Edit</button>
+                                <button class="action-link">Delete</button>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="table-cell">AB+</td>
+                            <td class="table-cell">15</td>
+                            <td class="table-cell">2025-09-10</td>
+                            <td class="table-cell"><span class="status-badge status-critical">Critical</span></td>
+                            <td class="table-cell">
+                                <button class="action-link">Edit</button>
+                                <button class="action-link">Delete</button>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="table-cell">O-</td>
+                            <td class="table-cell">8</td>
+                            <td class="table-cell">2025-08-25</td>
+                            <td class="table-cell"><span class="status-badge status-critical">Critical</span></td>
+                            <td class="table-cell">
+                                <button class="action-link">Edit</button>
+                                <button class="action-link">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="donor-page" class="page-section">
+            <div class="page-header">
+                <h2 class="page-title">Donor Registration</h2>
+                <p class="page-subtitle">Register a new blood donor</p>
+            </div>
+
+            <div class="form-container">
+                <form id="donor-registration-form" class="registration-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donor-first-name" class="form-label">First Name</label>
+                            <input type="text" id="donor-first-name" class="form-input" placeholder="Enter first name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donor-last-name" class="form-label">Last Name</label>
+                            <input type="text" id="donor-last-name" class="form-input" placeholder="Enter last name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donor-email" class="form-label">Email Address</label>
+                            <input type="email" id="donor-email" class="form-input" placeholder="Enter email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donor-phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="donor-phone" class="form-input" placeholder="Enter phone number" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donor-age" class="form-label">Age</label>
+                            <input type="number" id="donor-age" class="form-input" placeholder="Enter age" min="18" max="65" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donor-blood-type" class="form-label">Blood Type</label>
+                            <select id="donor-blood-type" class="form-input" required>
+                                <option value="">Select blood type</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donor-gender" class="form-label">Gender</label>
+                            <select id="donor-gender" class="form-input" required>
+                                <option value="">Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="donor-weight" class="form-label">Weight (kg)</label>
+                            <input type="number" id="donor-weight" class="form-input" placeholder="Enter weight" min="50" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="donor-address" class="form-label">Address</label>
+                        <textarea id="donor-address" class="form-input" placeholder="Enter full address" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="donor-medical-history" class="form-checkbox" required>
+                            <span>I confirm that I have no serious medical conditions</span>
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-button">Register Donor</button>
+                        <button type="reset" class="reset-button">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="request-page" class="page-section">
+            <div class="page-header">
+                <h2 class="page-title">Blood Request</h2>
+                <p class="page-subtitle">Request blood for medical purposes</p>
+            </div>
+
+            <div class="form-container">
+                <form id="blood-request-form" class="request-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="request-hospital-name" class="form-label">Hospital/Clinic Name</label>
+                            <input type="text" id="request-hospital-name" class="form-input" placeholder="Enter hospital name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="request-contact-person" class="form-label">Contact Person</label>
+                            <input type="text" id="request-contact-person" class="form-input" placeholder="Enter contact person name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="request-phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="request-phone" class="form-input" placeholder="Enter phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="request-email" class="form-label">Email Address</label>
+                            <input type="email" id="request-email" class="form-input" placeholder="Enter email address" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="request-blood-type" class="form-label">Blood Type Required</label>
+                            <select id="request-blood-type" class="form-input" required>
+                                <option value="">Select blood type</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="request-units" class="form-label">Units Required</label>
+                            <input type="number" id="request-units" class="form-input" placeholder="Enter number of units" min="1" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="request-date" class="form-label">Required Date</label>
+                            <input type="date" id="request-date" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="request-urgency" class="form-label">Urgency Level</label>
+                            <select id="request-urgency" class="form-input" required>
+                                <option value="">Select urgency</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Urgent">Urgent</option>
+                                <option value="Emergency">Emergency</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="request-reason" class="form-label">Reason for Request</label>
+                        <textarea id="request-reason" class="form-input" placeholder="Enter reason for blood request" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-button">Submit Request</button>
+                        <button type="reset" class="reset-button">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="search-page" class="page-section">
+            <div class="page-header">
+                <h2 class="page-title">Search Blood Availability</h2>
+                <p class="page-subtitle">Check blood availability in the system</p>
+            </div>
+
+            <div class="search-container">
+                <div class="search-filters">
+                    <div class="filter-group">
+                        <label for="search-blood-type" class="filter-label">Blood Type</label>
+                        <select id="search-blood-type" class="filter-input">
+                            <option value="">All Blood Types</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                    <button class="search-button" onclick="performSearch()">Search</button>
+                </div>
+
+                <div id="search-results" class="search-results">
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-blood-type">O+</div>
+                            <div class="result-details">
+                                <p class="result-label">Blood Type</p>
+                                <p class="result-value">O Positive</p>
+                            </div>
+                            <div class="result-stock">
+                                <p class="result-label">Available Units</p>
+                                <p class="result-value">45</p>
+                            </div>
+                            <div class="result-expiry">
+                                <p class="result-label">Expiry Date</p>
+                                <p class="result-value">2025-12-15</p>
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <div class="result-blood-type">A+</div>
+                            <div class="result-details">
+                                <p class="result-label">Blood Type</p>
+                                <p class="result-value">A Positive</p>
+                            </div>
+                            <div class="result-stock">
+                                <p class="result-label">Available Units</p>
+                                <p class="result-value">32</p>
+                            </div>
+                            <div class="result-expiry">
+                                <p class="result-label">Expiry Date</p>
+                                <p class="result-value">2025-11-20</p>
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <div class="result-blood-type">B+</div>
+                            <div class="result-details">
+                                <p class="result-label">Blood Type</p>
+                                <p class="result-value">B Positive</p>
+                            </div>
+                            <div class="result-stock">
+                                <p class="result-label">Available Units</p>
+                                <p class="result-value">28</p>
+                            </div>
+                            <div class="result-expiry">
+                                <p class="result-label">Expiry Date</p>
+                                <p class="result-value">2025-10-30</p>
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <div class="result-blood-type">AB+</div>
+                            <div class="result-details">
+                                <p class="result-label">Blood Type</p>
+                                <p class="result-value">AB Positive</p>
+                            </div>
+                            <div class="result-stock">
+                                <p class="result-label">Available Units</p>
+                                <p class="result-value">15</p>
+                            </div>
+                            <div class="result-expiry">
+                                <p class="result-label">Expiry Date</p>
+                                <p class="result-value">2025-09-10</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2025 Blood Bank Management System. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
